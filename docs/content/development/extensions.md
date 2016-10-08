@@ -58,6 +58,7 @@ All of these community extensions can be downloaded using *pull-deps* with the c
 |druid-parquet-extensions|Support for data in Apache Parquet data format. Requires druid-avro-extensions to be loaded.|[link](../development/extensions-contrib/parquet.html)|
 |druid-rabbitmq|RabbitMQ firehose.|[link](../development/extensions-contrib/rabbitmq.html)|
 |druid-rocketmq|RocketMQ firehose.|[link](../development/extensions-contrib/rocketmq.html)|
+|druid-google-extensions|Google Cloud Storage deep storage.|[link](../development/extensions-contrib/google.html)|
 |graphite-emitter|Graphite metrics emitter|[link](../development/extensions-contrib/graphite.html)|
 |statsd-emitter|StatsD metrics emitter|[link](../development/extensions-contrib/statsd.html)|
 

@@ -54,6 +54,21 @@ The constant post-aggregator always returns the specified value.
 { "type"  : "constant", "name"  : <output_name>, "value" : <numerical_value> }
 ```
 
+### Greatest / Least post-aggregators
+
+`doubleGreatest` and `longGreatest` computes the maximum of all fields and Double.NEGATIVE_INFINITY.
+`doubleLeast` and `longLeast` computes the minimum of all fields and Double.POSITIVE_INFINITY.
+
+Example:
+
+```json
+{ 
+  "type"  : "doubleGreatest",
+  "name"  : <output_name>,
+  "fields": [<post_aggregator>, <post_aggregator>, ...]
+}
+```
+
 ### JavaScript post-aggregator
 
 Applies the provided JavaScript function to the given fields. Fields are passed as arguments to the JavaScript function in the given order.
