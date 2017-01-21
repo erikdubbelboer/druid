@@ -130,22 +130,22 @@ public class FloatFilteringTest extends BaseFilterTest
   public void testFloatColumnFiltering()
   {
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, "0", null),
+        new SelectorDimFilter(FLOAT_COLUMN, "0", null, null),
         ImmutableList.<String>of()
     );
 
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, "0.0", null),
+        new SelectorDimFilter(FLOAT_COLUMN, "0.0", null, null),
         ImmutableList.<String>of()
     );
 
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, "3", null),
+        new SelectorDimFilter(FLOAT_COLUMN, "3", null, null),
         ImmutableList.<String>of("3")
     );
 
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, "3.0", null),
+        new SelectorDimFilter(FLOAT_COLUMN, "3.0", null, null),
         ImmutableList.<String>of("3")
     );
 
@@ -227,17 +227,17 @@ public class FloatFilteringTest extends BaseFilterTest
   public void testFloatColumnFilteringWithNonNumbers()
   {
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, "", null),
+        new SelectorDimFilter(FLOAT_COLUMN, "", null, null),
         ImmutableList.<String>of()
     );
 
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, null, null),
+        new SelectorDimFilter(FLOAT_COLUMN, null, null, null),
         ImmutableList.<String>of()
     );
 
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, "abc", null),
+        new SelectorDimFilter(FLOAT_COLUMN, "abc", null, null),
         ImmutableList.<String>of()
     );
 
@@ -286,11 +286,11 @@ public class FloatFilteringTest extends BaseFilterTest
     LookupExtractionFn exfn = new LookupExtractionFn(mapExtractor, false, "UNKNOWN", false, true);
 
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, "Monday", exfn),
+        new SelectorDimFilter(FLOAT_COLUMN, "Monday", exfn, null),
         ImmutableList.<String>of("1")
     );
     assertFilterMatches(
-        new SelectorDimFilter(FLOAT_COLUMN, "Notaday", exfn),
+        new SelectorDimFilter(FLOAT_COLUMN, "Notaday", exfn, null),
         ImmutableList.<String>of()
     );
 
@@ -340,12 +340,12 @@ public class FloatFilteringTest extends BaseFilterTest
   public void testMultithreaded()
   {
     assertFilterMatchesMultithreaded(
-        new SelectorDimFilter(FLOAT_COLUMN, "3", null),
+        new SelectorDimFilter(FLOAT_COLUMN, "3", null, null),
         ImmutableList.<String>of("3")
     );
 
     assertFilterMatchesMultithreaded(
-        new SelectorDimFilter(FLOAT_COLUMN, "3.0", null),
+        new SelectorDimFilter(FLOAT_COLUMN, "3.0", null, null),
         ImmutableList.<String>of("3")
     );
 

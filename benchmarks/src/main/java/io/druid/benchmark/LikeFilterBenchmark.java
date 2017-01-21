@@ -69,6 +69,7 @@ public class LikeFilterBenchmark
   private static final Filter SELECTOR_EQUALS = new SelectorDimFilter(
       "foo",
       "1000000",
+      null,
       null
   ).toFilter();
 

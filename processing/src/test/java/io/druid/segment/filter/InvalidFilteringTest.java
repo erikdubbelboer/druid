@@ -115,12 +115,12 @@ public class InvalidFilteringTest extends BaseFilterTest
   {
     // single value matching
     assertFilterMatches(
-        new SelectorDimFilter("hyperion", "a string", null),
+        new SelectorDimFilter("hyperion", "a string", null, null),
         ImmutableList.<String>of()
     );
 
     assertFilterMatches(
-        new SelectorDimFilter("hyperion", null, null),
+        new SelectorDimFilter("hyperion", null, null, null),
         ImmutableList.<String>of("1", "2", "3", "4", "5", "6")
     );
 

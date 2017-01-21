@@ -163,7 +163,7 @@ public class ExtractionDimFilterTest
   public void testEmpty()
   {
     Filter extractionFilter = new SelectorDimFilter(
-        "foo", "NFDJUKFNDSJFNS", DIM_EXTRACTION_FN
+        "foo", "NFDJUKFNDSJFNS", DIM_EXTRACTION_FN, null
     ).toFilter();
     ImmutableBitmap immutableBitmap = extractionFilter.getBitmapIndex(BITMAP_INDEX_SELECTOR);
     Assert.assertEquals(0, immutableBitmap.size());
@@ -173,7 +173,7 @@ public class ExtractionDimFilterTest
   public void testNull()
   {
     Filter extractionFilter = new SelectorDimFilter(
-        "FDHJSFFHDS", "extractDimVal", DIM_EXTRACTION_FN
+        "FDHJSFFHDS", "extractDimVal", DIM_EXTRACTION_FN, null
     ).toFilter();
     ImmutableBitmap immutableBitmap = extractionFilter.getBitmapIndex(BITMAP_INDEX_SELECTOR);
     Assert.assertEquals(0, immutableBitmap.size());
@@ -183,7 +183,7 @@ public class ExtractionDimFilterTest
   public void testNormal()
   {
     Filter extractionFilter = new SelectorDimFilter(
-        "foo", "extractDimVal", DIM_EXTRACTION_FN
+        "foo", "extractDimVal", DIM_EXTRACTION_FN, null
     ).toFilter();
     ImmutableBitmap immutableBitmap = extractionFilter.getBitmapIndex(BITMAP_INDEX_SELECTOR);
     Assert.assertEquals(1, immutableBitmap.size());

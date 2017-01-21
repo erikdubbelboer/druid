@@ -38,11 +38,11 @@ import java.util.List;
 public class GetDimensionRangeSetTest
 {
 
-  private final DimFilter selector1 = new SelectorDimFilter("dim1", "a", null);
-  private final DimFilter selector2 = new SelectorDimFilter("dim1", "z", null);
-  private final DimFilter selector3 = new SelectorDimFilter("dim2", "c", null);
-  private final DimFilter selector4 = new SelectorDimFilter("dimWorld", "find", IdentityExtractionFn.getInstance());
-  private final DimFilter selector5 = new SelectorDimFilter("dim1", null, null);
+  private final DimFilter selector1 = new SelectorDimFilter("dim1", "a", null, null);
+  private final DimFilter selector2 = new SelectorDimFilter("dim1", "z", null, null);
+  private final DimFilter selector3 = new SelectorDimFilter("dim2", "c", null, null);
+  private final DimFilter selector4 = new SelectorDimFilter("dimWorld", "find", IdentityExtractionFn.getInstance(), null);
+  private final DimFilter selector5 = new SelectorDimFilter("dim1", null, null, null);
   private final DimFilter in1 = new InDimFilter("dim1", ImmutableList.of("testing", "this", "filter", "tillend"), null);
   private final DimFilter in2 = new InDimFilter("dim2", ImmutableList.of("again"), null);
   private final DimFilter in3 = new InDimFilter("dim1", Arrays.asList("null", null), null);

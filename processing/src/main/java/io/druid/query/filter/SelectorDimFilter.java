@@ -21,6 +21,7 @@ package io.druid.query.filter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -31,21 +32,27 @@ import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 import com.google.common.primitives.Floats;
 import io.druid.common.guava.GuavaUtils;
+import io.druid.java.util.common.IAE;
 import io.druid.java.util.common.StringUtils;
 import io.druid.query.extraction.ExtractionFn;
 import io.druid.segment.filter.DimensionPredicateFilter;
+import io.druid.segment.filter.DimensionsFilter;
 import io.druid.segment.filter.SelectorFilter;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
  */
 public class SelectorDimFilter implements DimFilter
 {
+  private static final Joiner IS_JOINER = Joiner.on(" = ");
+
   private final String dimension;
   private final String value;
   private final ExtractionFn extractionFn;
+  private final String[] dimensions;
 
   private final Object initLock = new Object();
 
@@ -56,19 +63,51 @@ public class SelectorDimFilter implements DimFilter
   public SelectorDimFilter(
       @JsonProperty("dimension") String dimension,
       @JsonProperty("value") String value,
-      @JsonProperty("extractionFn") ExtractionFn extractionFn
+      @JsonProperty("extractionFn") ExtractionFn extractionFn,
+      @JsonProperty("dimensions") String[] dimensions
   )
   {
-    Preconditions.checkArgument(dimension != null, "dimension must not be null");
+    if (dimension == null && dimensions == null) {
+      throw new IAE("dimension or dimensions must not be null");
+    }
+    if (dimensions != null) {
+      Preconditions.checkArgument(dimensions.length >= 2, "dimensions must have a least 2 dimensions");
+    }
 
     this.dimension = dimension;
     this.value = Strings.nullToEmpty(value);
     this.extractionFn = extractionFn;
+    this.dimensions = dimensions;
   }
 
   @Override
   public byte[] getCacheKey()
   {
+    if (dimensions != null) {
+      byte[] extractionFnBytes = extractionFn == null ? new byte[0] : extractionFn.getCacheKey();
+      final byte[][] dimensionsBytes = new byte[dimensions.length][];
+      int dimensionsBytesSize = 0;
+
+      if (dimensions != null) {
+        for (int i = 0; i < dimensions.length; i++) {
+          dimensionsBytes[i] = StringUtils.toUtf8(dimensions[i]);
+          dimensionsBytesSize += dimensionsBytes[i].length + 1;
+        }
+      }
+
+      ByteBuffer filterCacheKey = ByteBuffer.allocate(2 + extractionFnBytes.length + dimensionsBytesSize)
+                       .put(DimFilterUtils.SELECTOR_CACHE_ID)
+                       .put(extractionFnBytes)
+                       .put(DimFilterUtils.STRING_SEPARATOR);
+
+      for (byte[] bytes : dimensionsBytes) {
+        filterCacheKey.put(bytes)
+                      .put((byte) 0xFF);
+      }
+
+      return filterCacheKey.array();
+    }
+
     byte[] dimensionBytes = StringUtils.toUtf8(dimension);
     byte[] valueBytes = (value == null) ? new byte[]{} : StringUtils.toUtf8(value);
     byte[] extractionFnBytes = extractionFn == null ? new byte[0] : extractionFn.getCacheKey();
@@ -86,12 +125,20 @@ public class SelectorDimFilter implements DimFilter
   @Override
   public DimFilter optimize()
   {
+    if (dimensions != null) {
+      return this;
+    }
+
     return new InDimFilter(dimension, ImmutableList.of(value), extractionFn).optimize();
   }
 
   @Override
   public Filter toFilter()
   {
+    if (dimensions != null) {
+      return new DimensionsFilter(dimensions, extractionFn);
+    }
+
     if (extractionFn == null) {
       return new SelectorFilter(dimension, value);
     } else {
@@ -141,9 +188,27 @@ public class SelectorDimFilter implements DimFilter
     return extractionFn;
   }
 
+  @JsonProperty
+  public String[] getDimensions()
+  {
+    return dimensions;
+  }
+
   @Override
   public String toString()
   {
+    if (dimensions != null) {
+      String[] extractionFnDimensions = new String[dimensions.length];
+      for (int i = 0; i < dimensions.length; i++) {
+        if (extractionFn != null) {
+          extractionFnDimensions[i] = String.format("%s(%s)", extractionFn, dimensions[i]);
+        } else {
+          extractionFnDimensions[i] = dimensions[i];
+        }
+      }
+      return IS_JOINER.join(extractionFnDimensions);
+    }
+
     if (extractionFn != null) {
       return String.format("%s(%s) = %s", extractionFn, dimension, value);
     } else {
@@ -163,10 +228,13 @@ public class SelectorDimFilter implements DimFilter
 
     SelectorDimFilter that = (SelectorDimFilter) o;
 
-    if (!dimension.equals(that.dimension)) {
+    if (dimension != null ? !dimension.equals(that.dimension) : that.dimension != null) {
       return false;
     }
     if (value != null ? !value.equals(that.value) : that.value != null) {
+      return false;
+    }
+    if (!Arrays.equals(dimensions, that.dimensions)) {
       return false;
     }
     return extractionFn != null ? extractionFn.equals(that.extractionFn) : that.extractionFn == null;
@@ -175,6 +243,10 @@ public class SelectorDimFilter implements DimFilter
   @Override
   public RangeSet<String> getDimensionRangeSet(String dimension)
   {
+    if (dimensions != null) {
+      return null;
+    }
+
     if (!Objects.equals(getDimension(), dimension) || getExtractionFn() != null) {
       return null;
     }
@@ -186,9 +258,10 @@ public class SelectorDimFilter implements DimFilter
   @Override
   public int hashCode()
   {
-    int result = dimension.hashCode();
+    int result = dimension != null ? dimension.hashCode() : 0;
     result = 31 * result + (value != null ? value.hashCode() : 0);
     result = 31 * result + (extractionFn != null ? extractionFn.hashCode() : 0);
+    result = 31 * result + (dimensions != null ? Arrays.hashCode(dimensions) : 0);
     return result;
   }
 

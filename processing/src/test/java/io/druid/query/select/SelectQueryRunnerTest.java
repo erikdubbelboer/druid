@@ -420,7 +420,7 @@ public class SelectQueryRunnerTest
     for (int[] param : new int[][]{{3, 3}, {0, 1}, {5, 5}, {2, 7}, {3, 0}}) {
       SelectQuery query = newTestQuery()
           .intervals(I_0112_0114)
-          .filters(new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "spot", null))
+          .filters(new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "spot", null, null))
           .granularity(QueryRunnerTestHelper.dayGran)
           .dimensionSpecs(DefaultDimensionSpec.toSpec(QueryRunnerTestHelper.qualityDimension))
           .metrics(Lists.<String>newArrayList(QueryRunnerTestHelper.indexMetric))
@@ -488,7 +488,7 @@ public class SelectQueryRunnerTest
     LookupExtractionFn lookupExtractionFn = new LookupExtractionFn(mapLookupExtractor, false, null, true, true);
     SelectQuery query = newTestQuery()
         .intervals(I_0112_0114)
-        .filters(new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "replaced", lookupExtractionFn))
+        .filters(new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "replaced", lookupExtractionFn, null))
         .granularity(QueryRunnerTestHelper.dayGran)
         .dimensionSpecs(DefaultDimensionSpec.toSpec(QueryRunnerTestHelper.qualityDimension))
         .metrics(Lists.<String>newArrayList(QueryRunnerTestHelper.indexMetric))
@@ -544,8 +544,8 @@ public class SelectQueryRunnerTest
         .filters(
             new AndDimFilter(
                 Arrays.<DimFilter>asList(
-                    new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "spot", null),
-                    new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "foo", null)
+                    new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "spot", null, null),
+                    new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "foo", null, null)
                 )
             )
         )

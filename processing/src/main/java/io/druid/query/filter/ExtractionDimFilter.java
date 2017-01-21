@@ -95,13 +95,13 @@ public class ExtractionDimFilter implements DimFilter
   @Override
   public DimFilter optimize()
   {
-    return new SelectorDimFilter(dimension, value, extractionFn).optimize();
+    return new SelectorDimFilter(dimension, value, extractionFn, null).optimize();
   }
 
   @Override
   public Filter toFilter()
   {
-    return new SelectorDimFilter(dimension, value, extractionFn).toFilter();
+    return new SelectorDimFilter(dimension, value, extractionFn, null).toFilter();
   }
 
   @Override

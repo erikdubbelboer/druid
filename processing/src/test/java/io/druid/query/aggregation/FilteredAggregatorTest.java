@@ -72,7 +72,7 @@ public class FilteredAggregatorTest
 
     FilteredAggregatorFactory factory = new FilteredAggregatorFactory(
         new DoubleSumAggregatorFactory("billy", "value"),
-        new SelectorDimFilter("dim", "a", null)
+        new SelectorDimFilter("dim", "a", null, null)
     );
 
     FilteredAggregator agg = (FilteredAggregator) factory.factorize(
@@ -236,7 +236,7 @@ public class FilteredAggregatorTest
 
     FilteredAggregatorFactory factory = new FilteredAggregatorFactory(
         new DoubleSumAggregatorFactory("billy", "value"),
-        new NotDimFilter(new SelectorDimFilter("dim", "b", null))
+        new NotDimFilter(new SelectorDimFilter("dim", "b", null, null))
     );
 
     validateFilteredAggs(factory, values, selector);
@@ -250,7 +250,7 @@ public class FilteredAggregatorTest
 
     FilteredAggregatorFactory factory = new FilteredAggregatorFactory(
         new DoubleSumAggregatorFactory("billy", "value"),
-        new OrDimFilter(Lists.<DimFilter>newArrayList(new SelectorDimFilter("dim", "a", null), new SelectorDimFilter("dim", "b", null)))
+        new OrDimFilter(Lists.<DimFilter>newArrayList(new SelectorDimFilter("dim", "a", null, null), new SelectorDimFilter("dim", "b", null, null)))
     );
 
     FilteredAggregator agg = (FilteredAggregator) factory.factorize(
@@ -271,7 +271,7 @@ public class FilteredAggregatorTest
 
     FilteredAggregatorFactory factory = new FilteredAggregatorFactory(
         new DoubleSumAggregatorFactory("billy", "value"),
-        new AndDimFilter(Lists.<DimFilter>newArrayList(new NotDimFilter(new SelectorDimFilter("dim", "b", null)), new SelectorDimFilter("dim", "a", null))));
+        new AndDimFilter(Lists.<DimFilter>newArrayList(new NotDimFilter(new SelectorDimFilter("dim", "b", null, null)), new SelectorDimFilter("dim", "a", null, null))));
 
     validateFilteredAggs(factory, values, selector);
   }
@@ -325,7 +325,7 @@ public class FilteredAggregatorTest
 
     factory = new FilteredAggregatorFactory(
         new DoubleSumAggregatorFactory("billy", "value"),
-        new SelectorDimFilter("dim", "aAARDVARK", extractionFn)
+        new SelectorDimFilter("dim", "aAARDVARK", extractionFn, null)
     );
     selector = new TestFloatColumnSelector(values);
     validateFilteredAggs(factory, values, selector);

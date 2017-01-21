@@ -239,7 +239,7 @@ public class SearchBenchmark
     final String dimName = "dimUniform";
     final List<DimFilter> dimFilters = Lists.newArrayList();
     dimFilters.add(new InDimFilter(dimName, dimUniformFilterVals, IdentityExtractionFn.getInstance()));
-    dimFilters.add(new SelectorDimFilter(dimName, "3", StrlenExtractionFn.instance()));
+    dimFilters.add(new SelectorDimFilter(dimName, "3", StrlenExtractionFn.instance(), null));
     dimFilters.add(new BoundDimFilter(dimName, "100", "10000", true, true, true, new DimExtractionFn()
     {
       @Override
@@ -293,7 +293,7 @@ public class SearchBenchmark
     final String dimName = "dimUniform";
     final List<DimFilter> dimFilters = Lists.newArrayList();
     dimFilters.add(new InDimFilter(dimName, dimUniformFilterVals, null));
-    dimFilters.add(new SelectorDimFilter(dimName, "3", null));
+    dimFilters.add(new SelectorDimFilter(dimName, "3", null, null));
     dimFilters.add(new BoundDimFilter(dimName, "100", "10000", true, true, true, null, null));
     dimFilters.add(new InDimFilter(dimName, dimUniformFilterVals, null));
     dimFilters.add(new InDimFilter(dimName, dimUniformFilterVals, null));

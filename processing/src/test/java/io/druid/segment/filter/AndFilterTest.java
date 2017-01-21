@@ -88,43 +88,43 @@ public class AndFilterTest extends BaseFilterTest
   {
     assertFilterMatches(
         new AndDimFilter(ImmutableList.<DimFilter>of(
-            new SelectorDimFilter("dim0", "0", null),
-            new SelectorDimFilter("dim1", "0", null)
+            new SelectorDimFilter("dim0", "0", null, null),
+            new SelectorDimFilter("dim1", "0", null, null)
         )),
         ImmutableList.of("0")
     );
     assertFilterMatches(
         new AndDimFilter(ImmutableList.<DimFilter>of(
-            new SelectorDimFilter("dim0", "0", null),
-            new SelectorDimFilter("dim1", "1", null)
+            new SelectorDimFilter("dim0", "0", null, null),
+            new SelectorDimFilter("dim1", "1", null, null)
         )),
         ImmutableList.<String>of()
     );
     assertFilterMatches(
         new AndDimFilter(ImmutableList.<DimFilter>of(
-            new SelectorDimFilter("dim0", "1", null),
-            new SelectorDimFilter("dim1", "0", null)
+            new SelectorDimFilter("dim0", "1", null, null),
+            new SelectorDimFilter("dim1", "0", null, null)
         )),
         ImmutableList.of("1")
     );
     assertFilterMatches(
         new AndDimFilter(ImmutableList.<DimFilter>of(
-            new SelectorDimFilter("dim0", "1", null),
-            new SelectorDimFilter("dim1", "1", null)
+            new SelectorDimFilter("dim0", "1", null, null),
+            new SelectorDimFilter("dim1", "1", null, null)
         )),
         ImmutableList.<String>of()
     );
     assertFilterMatches(
         new AndDimFilter(ImmutableList.<DimFilter>of(
-            new NotDimFilter(new SelectorDimFilter("dim0", "1", null)),
-            new NotDimFilter(new SelectorDimFilter("dim1", "1", null))
+            new NotDimFilter(new SelectorDimFilter("dim0", "1", null, null)),
+            new NotDimFilter(new SelectorDimFilter("dim1", "1", null, null))
         )),
         ImmutableList.of("0", "2", "3", "4", "5")
     );
     assertFilterMatches(
         new AndDimFilter(ImmutableList.<DimFilter>of(
-            new NotDimFilter(new SelectorDimFilter("dim0", "0", null)),
-            new NotDimFilter(new SelectorDimFilter("dim1", "0", null))
+            new NotDimFilter(new SelectorDimFilter("dim0", "0", null, null)),
+            new NotDimFilter(new SelectorDimFilter("dim1", "0", null, null))
         )),
         ImmutableList.<String>of()
     );
@@ -135,43 +135,43 @@ public class AndFilterTest extends BaseFilterTest
   {
     assertFilterMatches(
         new NotDimFilter(new AndDimFilter(ImmutableList.<DimFilter>of(
-            new SelectorDimFilter("dim0", "0", null),
-            new SelectorDimFilter("dim1", "0", null)
+            new SelectorDimFilter("dim0", "0", null, null),
+            new SelectorDimFilter("dim1", "0", null, null)
         ))),
         ImmutableList.of("1", "2", "3", "4", "5")
     );
     assertFilterMatches(
         new NotDimFilter(new AndDimFilter(ImmutableList.<DimFilter>of(
-            new SelectorDimFilter("dim0", "0", null),
-            new SelectorDimFilter("dim1", "1", null)
+            new SelectorDimFilter("dim0", "0", null, null),
+            new SelectorDimFilter("dim1", "1", null, null)
         ))),
         ImmutableList.<String>of("0", "1", "2", "3", "4", "5")
     );
     assertFilterMatches(
         new NotDimFilter(new AndDimFilter(ImmutableList.<DimFilter>of(
-            new SelectorDimFilter("dim0", "1", null),
-            new SelectorDimFilter("dim1", "0", null)
+            new SelectorDimFilter("dim0", "1", null, null),
+            new SelectorDimFilter("dim1", "0", null, null)
         ))),
         ImmutableList.of("0", "2", "3", "4", "5")
     );
     assertFilterMatches(
         new NotDimFilter(new AndDimFilter(ImmutableList.<DimFilter>of(
-            new SelectorDimFilter("dim0", "1", null),
-            new SelectorDimFilter("dim1", "1", null)
+            new SelectorDimFilter("dim0", "1", null, null),
+            new SelectorDimFilter("dim1", "1", null, null)
         ))),
         ImmutableList.<String>of("0", "1", "2", "3", "4", "5")
     );
     assertFilterMatches(
         new NotDimFilter(new AndDimFilter(ImmutableList.<DimFilter>of(
-            new NotDimFilter(new SelectorDimFilter("dim0", "1", null)),
-            new NotDimFilter(new SelectorDimFilter("dim1", "1", null))
+            new NotDimFilter(new SelectorDimFilter("dim0", "1", null, null)),
+            new NotDimFilter(new SelectorDimFilter("dim1", "1", null, null))
         ))),
         ImmutableList.of("1")
     );
     assertFilterMatches(
         new NotDimFilter(new AndDimFilter(ImmutableList.<DimFilter>of(
-            new NotDimFilter(new SelectorDimFilter("dim0", "0", null)),
-            new NotDimFilter(new SelectorDimFilter("dim1", "0", null))
+            new NotDimFilter(new SelectorDimFilter("dim0", "0", null, null)),
+            new NotDimFilter(new SelectorDimFilter("dim1", "0", null, null))
         ))),
         ImmutableList.<String>of("0", "1", "2", "3", "4", "5")
     );

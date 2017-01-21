@@ -396,8 +396,8 @@ public class SearchQueryRunnerTest
               .filters(
                   new AndDimFilter(
                       Arrays.<DimFilter>asList(
-                          new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "total_market", null),
-                          new SelectorDimFilter(QueryRunnerTestHelper.qualityDimension, "mezzanine", null)
+                          new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "total_market", null, null),
+                          new SelectorDimFilter(QueryRunnerTestHelper.qualityDimension, "mezzanine", null, null)
                       )))
               .intervals(QueryRunnerTestHelper.fullOnInterval)
               .dimensions(QueryRunnerTestHelper.qualityDimension)

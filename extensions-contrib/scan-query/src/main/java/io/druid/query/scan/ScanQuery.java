@@ -354,7 +354,7 @@ public class ScanQuery extends BaseQuery<ScanResultValue>
 
     public ScanQueryBuilder filters(String dimensionName, String value)
     {
-      dimFilter = new SelectorDimFilter(dimensionName, value, null);
+      dimFilter = new SelectorDimFilter(dimensionName, value, null, null);
       return this;
     }
 

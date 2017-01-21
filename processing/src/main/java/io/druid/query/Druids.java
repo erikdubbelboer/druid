@@ -166,9 +166,9 @@ public class Druids
 
     public OrDimFilterBuilder fields(String dimensionName, String value, String... values)
     {
-      fields = Lists.<DimFilter>newArrayList(new SelectorDimFilter(dimensionName, value, null));
+      fields = Lists.<DimFilter>newArrayList(new SelectorDimFilter(dimensionName, value, null, null));
       for (String val : values) {
-        fields.add(new SelectorDimFilter(dimensionName, val, null));
+        fields.add(new SelectorDimFilter(dimensionName, val, null, null));
       }
       return this;
     }
@@ -259,7 +259,7 @@ public class Druids
 
     public SelectorDimFilter build()
     {
-      return new SelectorDimFilter(dimension, value, null);
+      return new SelectorDimFilter(dimension, value, null, null);
     }
 
     public SelectorDimFilterBuilder copy(SelectorDimFilterBuilder builder)
@@ -462,7 +462,7 @@ public class Druids
 
     public TimeseriesQueryBuilder filters(String dimensionName, String value)
     {
-      dimFilter = new SelectorDimFilter(dimensionName, value, null);
+      dimFilter = new SelectorDimFilter(dimensionName, value, null, null);
       return this;
     }
 
@@ -618,7 +618,7 @@ public class Druids
 
     public SearchQueryBuilder filters(String dimensionName, String value)
     {
-      dimFilter = new SelectorDimFilter(dimensionName, value, null);
+      dimFilter = new SelectorDimFilter(dimensionName, value, null, null);
       return this;
     }
 
@@ -848,7 +848,7 @@ public class Druids
 
     public TimeBoundaryQueryBuilder filters(String dimensionName, String value)
     {
-      dimFilter = new SelectorDimFilter(dimensionName, value, null);
+      dimFilter = new SelectorDimFilter(dimensionName, value, null, null);
       return this;
     }
 
@@ -1188,7 +1188,7 @@ public class Druids
 
     public SelectQueryBuilder filters(String dimensionName, String value)
     {
-      dimFilter = new SelectorDimFilter(dimensionName, value, null);
+      dimFilter = new SelectorDimFilter(dimensionName, value, null, null);
       return this;
     }
 

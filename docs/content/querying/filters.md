@@ -16,7 +16,15 @@ The grammar for a SELECTOR filter is as follows:
 
 This is the equivalent of `WHERE <dimension_string> = '<dimension_value_string>'`.
 
-The selector filter supports the use of extraction functions, see [Filtering with Extraction Functions](#filtering-with-extraction-functions) for details.
+The selector filter also supports comparing dimensions to each other. For example:
+
+``` json
+"filter": { "type": "selector", "dimensions": [<dimension_a_string>, <dimension_b_string>] }
+```
+
+This is the equivalent of `WHERE <dimension_a_string> = <dimension_b_string>`.
+
+The selector filter also supports the use of extraction functions, see [Filtering with Extraction Functions](#filtering-with-extraction-functions) for details.
 
 ### Regular expression filter
 

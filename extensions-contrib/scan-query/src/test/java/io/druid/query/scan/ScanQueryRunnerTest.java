@@ -283,7 +283,7 @@ public class ScanQueryRunnerTest
     for (int limit : new int[]{3, 1, 5, 7, 0}) {
       ScanQuery query = newTestQuery()
           .intervals(I_0112_0114)
-          .filters(new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "spot", null))
+          .filters(new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "spot", null, null))
           .columns(QueryRunnerTestHelper.qualityDimension, QueryRunnerTestHelper.indexMetric)
           .limit(limit)
           .build();
@@ -347,7 +347,7 @@ public class ScanQueryRunnerTest
     LookupExtractionFn lookupExtractionFn = new LookupExtractionFn(mapLookupExtractor, false, null, true, true);
     ScanQuery query = newTestQuery()
         .intervals(I_0112_0114)
-        .filters(new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "replaced", lookupExtractionFn))
+        .filters(new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "replaced", lookupExtractionFn, null))
         .columns(QueryRunnerTestHelper.qualityDimension, QueryRunnerTestHelper.indexMetric)
         .build();
 
@@ -399,8 +399,8 @@ public class ScanQueryRunnerTest
         .filters(
             new AndDimFilter(
                 Arrays.<DimFilter>asList(
-                    new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "spot", null),
-                    new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "foo", null)
+                    new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "spot", null, null),
+                    new SelectorDimFilter(QueryRunnerTestHelper.marketDimension, "foo", null, null)
                 )
             )
         )

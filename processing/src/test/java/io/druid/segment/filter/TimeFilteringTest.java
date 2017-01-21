@@ -109,11 +109,11 @@ public class TimeFilteringTest extends BaseFilterTest
   public void testTimeFilterAsLong()
   {
     assertFilterMatches(
-        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "0", null),
+        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "0", null, null),
         ImmutableList.<String>of("0")
     );
     assertFilterMatches(
-        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "9000", null),
+        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "9000", null, null),
         ImmutableList.<String>of()
     );
 
@@ -172,11 +172,11 @@ public class TimeFilteringTest extends BaseFilterTest
     LookupExtractionFn exfn = new LookupExtractionFn(mapExtractor, false, "UNKNOWN", false, true);
 
     assertFilterMatches(
-        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "Monday", exfn),
+        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "Monday", exfn, null),
         ImmutableList.<String>of("0")
     );
     assertFilterMatches(
-        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "Notaday", exfn),
+        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "Notaday", exfn, null),
         ImmutableList.<String>of()
     );
 
@@ -227,7 +227,7 @@ public class TimeFilteringTest extends BaseFilterTest
   {
     ExtractionFn exfn = new TimeFormatExtractionFn("EEEE", DateTimeZone.forID("America/New_York"), "en", null, false);
     assertFilterMatches(
-        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "Wednesday", exfn),
+        new SelectorDimFilter(Column.TIME_COLUMN_NAME, "Wednesday", exfn, null),
         ImmutableList.<String>of("0", "1", "2", "3", "4", "5")
     );
   }

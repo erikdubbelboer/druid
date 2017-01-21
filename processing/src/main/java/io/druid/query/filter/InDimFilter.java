@@ -144,7 +144,7 @@ public class InDimFilter implements DimFilter
   {
     InDimFilter inFilter = optimizeLookup();
     if (inFilter.values.size() == 1) {
-      return new SelectorDimFilter(inFilter.dimension, inFilter.values.first(), inFilter.getExtractionFn());
+      return new SelectorDimFilter(inFilter.dimension, inFilter.values.first(), inFilter.getExtractionFn(), null);
     }
     return inFilter;
   }

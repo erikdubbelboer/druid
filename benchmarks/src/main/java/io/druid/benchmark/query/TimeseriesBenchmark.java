@@ -375,7 +375,7 @@ public class TimeseriesBenchmark
         new QueryableIndexSegment("qIndex", qIndexes.get(0))
     );
 
-    DimFilter filter = new SelectorDimFilter("dimSequential", "399", null);
+    DimFilter filter = new SelectorDimFilter("dimSequential", "399", null, null);
     Query filteredQuery = query.withDimFilter(filter);
 
     List<Result<TimeseriesResultValue>> results = TimeseriesBenchmark.runQuery(factory, runner, filteredQuery);

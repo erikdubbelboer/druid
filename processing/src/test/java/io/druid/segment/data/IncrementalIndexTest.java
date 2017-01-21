@@ -317,7 +317,7 @@ public class IncrementalIndexTest
             new CountAggregatorFactory("count"),
             new FilteredAggregatorFactory(
                 new CountAggregatorFactory("count_selector_filtered"),
-                new SelectorDimFilter("dim2", "2", null)
+                new SelectorDimFilter("dim2", "2", null, null)
             ),
             new FilteredAggregatorFactory(
                 new CountAggregatorFactory("count_bound_filtered"),
@@ -325,11 +325,11 @@ public class IncrementalIndexTest
             ),
             new FilteredAggregatorFactory(
                 new CountAggregatorFactory("count_multivaldim_filtered"),
-                new SelectorDimFilter("dim3", "b", null)
+                new SelectorDimFilter("dim3", "b", null, null)
             ),
             new FilteredAggregatorFactory(
                 new CountAggregatorFactory("count_numeric_filtered"),
-                new SelectorDimFilter("met1", "11", null)
+                new SelectorDimFilter("met1", "11", null, null)
             )
         })
     );

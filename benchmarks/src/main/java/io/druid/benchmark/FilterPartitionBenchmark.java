@@ -348,7 +348,7 @@ public class FilterPartitionBenchmark
   @OutputTimeUnit(TimeUnit.MICROSECONDS)
   public void readWithExFnPreFilter(Blackhole blackhole) throws Exception
   {
-    Filter filter = new SelectorDimFilter("dimSequential", "super-199", JS_EXTRACTION_FN).toFilter();
+    Filter filter = new SelectorDimFilter("dimSequential", "super-199", JS_EXTRACTION_FN, null).toFilter();
 
     StorageAdapter sa = new QueryableIndexStorageAdapter(qIndex);
     Sequence<Cursor> cursors = makeCursors(sa, filter);
@@ -421,19 +421,19 @@ public class FilterPartitionBenchmark
   public void readComplexOrFilter(Blackhole blackhole) throws Exception
   {
     DimFilter dimFilter1 = new OrDimFilter(Arrays.<DimFilter>asList(
-        new SelectorDimFilter("dimSequential", "199", null),
+        new SelectorDimFilter("dimSequential", "199", null, null),
         new AndDimFilter(Arrays.<DimFilter>asList(
             new NoBitmapSelectorDimFilter("dimMultivalEnumerated2", "Corundum", null),
-            new SelectorDimFilter("dimMultivalEnumerated", "Bar", null)
+            new SelectorDimFilter("dimMultivalEnumerated", "Bar", null, null)
         )
         ))
     );
     DimFilter dimFilter2 = new OrDimFilter(Arrays.<DimFilter>asList(
-        new SelectorDimFilter("dimSequential", "299", null),
-        new SelectorDimFilter("dimSequential", "399", null),
+        new SelectorDimFilter("dimSequential", "299", null, null),
+        new SelectorDimFilter("dimSequential", "399", null, null),
         new AndDimFilter(Arrays.<DimFilter>asList(
             new NoBitmapSelectorDimFilter("dimMultivalEnumerated2", "Xylophone", null),
-            new SelectorDimFilter("dimMultivalEnumerated", "Foo", null)
+            new SelectorDimFilter("dimMultivalEnumerated", "Foo", null, null)
         )
         ))
     );
@@ -442,7 +442,7 @@ public class FilterPartitionBenchmark
         dimFilter2,
         new AndDimFilter(Arrays.<DimFilter>asList(
             new NoBitmapSelectorDimFilter("dimMultivalEnumerated2", "Orange", null),
-            new SelectorDimFilter("dimMultivalEnumerated", "World", null)
+            new SelectorDimFilter("dimMultivalEnumerated", "World", null, null)
         )
         ))
     );
@@ -463,19 +463,19 @@ public class FilterPartitionBenchmark
   public void readComplexOrFilterCNF(Blackhole blackhole) throws Exception
   {
     DimFilter dimFilter1 = new OrDimFilter(Arrays.<DimFilter>asList(
-        new SelectorDimFilter("dimSequential", "199", null),
+        new SelectorDimFilter("dimSequential", "199", null, null),
         new AndDimFilter(Arrays.<DimFilter>asList(
             new NoBitmapSelectorDimFilter("dimMultivalEnumerated2", "Corundum", null),
-            new SelectorDimFilter("dimMultivalEnumerated", "Bar", null)
+            new SelectorDimFilter("dimMultivalEnumerated", "Bar", null, null)
         )
         ))
     );
     DimFilter dimFilter2 = new OrDimFilter(Arrays.<DimFilter>asList(
-        new SelectorDimFilter("dimSequential", "299", null),
-        new SelectorDimFilter("dimSequential", "399", null),
+        new SelectorDimFilter("dimSequential", "299", null, null),
+        new SelectorDimFilter("dimSequential", "399", null, null),
         new AndDimFilter(Arrays.<DimFilter>asList(
             new NoBitmapSelectorDimFilter("dimMultivalEnumerated2", "Xylophone", null),
-            new SelectorDimFilter("dimMultivalEnumerated", "Foo", null)
+            new SelectorDimFilter("dimMultivalEnumerated", "Foo", null, null)
         )
         ))
     );
@@ -484,7 +484,7 @@ public class FilterPartitionBenchmark
         dimFilter2,
         new AndDimFilter(Arrays.<DimFilter>asList(
             new NoBitmapSelectorDimFilter("dimMultivalEnumerated2", "Orange", null),
-            new SelectorDimFilter("dimMultivalEnumerated", "World", null)
+            new SelectorDimFilter("dimMultivalEnumerated", "World", null, null)
         )
         ))
     );
@@ -596,7 +596,7 @@ public class FilterPartitionBenchmark
         ExtractionFn extractionFn
     )
     {
-      super(dimension, value, extractionFn);
+      super(dimension, value, extractionFn, null);
     }
     @Override
     public Filter toFilter()

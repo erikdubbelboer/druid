@@ -33,7 +33,12 @@ public class DimFilters
 {
   public static SelectorDimFilter dimEquals(String dimension, String value)
   {
-    return new SelectorDimFilter(dimension, value, null);
+    return new SelectorDimFilter(dimension, value, null, null);
+  }
+
+  public static SelectorDimFilter dimsEqual(String[] dimensions)
+  {
+    return new SelectorDimFilter(null, null, null, dimensions);
   }
 
   public static AndDimFilter and(DimFilter... filters)

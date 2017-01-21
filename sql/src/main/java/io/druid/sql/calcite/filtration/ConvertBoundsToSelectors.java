@@ -58,7 +58,8 @@ public class ConvertBoundsToSelectors extends BottomUpTransform
         return new SelectorDimFilter(
             bound.getDimension(),
             bound.getUpper(),
-            bound.getExtractionFn()
+            bound.getExtractionFn(),
+            null
         );
       } else {
         return filter;

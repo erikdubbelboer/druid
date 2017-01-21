@@ -30,40 +30,54 @@ public class SelectorDimFilterTest
   @Test
   public void testGetCacheKey()
   {
-    SelectorDimFilter selectorDimFilter = new SelectorDimFilter("abc", "d", null);
-    SelectorDimFilter selectorDimFilter2 = new SelectorDimFilter("ab", "cd", null);
+    SelectorDimFilter selectorDimFilter = new SelectorDimFilter("abc", "d", null, null);
+    SelectorDimFilter selectorDimFilter2 = new SelectorDimFilter("ab", "cd", null, null);
     Assert.assertFalse(Arrays.equals(selectorDimFilter.getCacheKey(), selectorDimFilter2.getCacheKey()));
 
     RegexDimExtractionFn regexFn = new RegexDimExtractionFn(".*", false, null);
-    SelectorDimFilter selectorDimFilter3 = new SelectorDimFilter("abc", "d", regexFn);
+    SelectorDimFilter selectorDimFilter3 = new SelectorDimFilter("abc", "d", regexFn, null);
     Assert.assertFalse(Arrays.equals(selectorDimFilter.getCacheKey(), selectorDimFilter3.getCacheKey()));
+
+    SelectorDimFilter selectorDimFilter4= new SelectorDimFilter(null, null, null, new String[]{ "abc", "d" });
+    SelectorDimFilter selectorDimFilter5 = new SelectorDimFilter(null, null, null, new String[]{ "ab", "cd" });
+    Assert.assertFalse(Arrays.equals(selectorDimFilter4.getCacheKey(), selectorDimFilter5.getCacheKey()));
+
+    SelectorDimFilter selectorDimFilter6 = new SelectorDimFilter(null, null, regexFn, new String[]{ "abc", "d" });
+    Assert.assertFalse(Arrays.equals(selectorDimFilter4.getCacheKey(), selectorDimFilter6.getCacheKey()));
   }
 
   @Test
   public void testToString()
   {
-    SelectorDimFilter selectorDimFilter = new SelectorDimFilter("abc", "d", null);
+    SelectorDimFilter selectorDimFilter = new SelectorDimFilter("abc", "d", null, null);
     RegexDimExtractionFn regexFn = new RegexDimExtractionFn(".*", false, null);
-    SelectorDimFilter selectorDimFilter2 = new SelectorDimFilter("abc", "d", regexFn);
+    SelectorDimFilter selectorDimFilter2 = new SelectorDimFilter("abc", "d", regexFn, null);
+    SelectorDimFilter selectorDimFilter3 = new SelectorDimFilter(null, null, null, new String[]{ "abc", "d" });
+    SelectorDimFilter selectorDimFilter4 = new SelectorDimFilter(null, null, regexFn, new String[]{ "abc", "d" });
 
     Assert.assertEquals("abc = d", selectorDimFilter.toString());
     Assert.assertEquals("regex(.*)(abc) = d", selectorDimFilter2.toString());
+    Assert.assertEquals("abc = d", selectorDimFilter3.toString());
+    Assert.assertEquals("regex(.*)(abc) = regex(.*)(d)", selectorDimFilter4.toString());
   }
 
   @Test
   public void testHashCode()
   {
-    SelectorDimFilter selectorDimFilter = new SelectorDimFilter("abc", "d", null);
+    SelectorDimFilter selectorDimFilter = new SelectorDimFilter("abc", "d", null, null);
     RegexDimExtractionFn regexFn = new RegexDimExtractionFn(".*", false, null);
-    SelectorDimFilter selectorDimFilter2 = new SelectorDimFilter("abc", "d", regexFn);
+    SelectorDimFilter selectorDimFilter2 = new SelectorDimFilter("abc", "d", regexFn, null);
+    SelectorDimFilter selectorDimFilter3 = new SelectorDimFilter(null, null, null, new String[]{ "abc", "d" });
+    SelectorDimFilter selectorDimFilter4 = new SelectorDimFilter(null, null, regexFn, new String[]{ "abc", "d" });
 
     Assert.assertNotEquals(selectorDimFilter.hashCode(), selectorDimFilter2.hashCode());
+    Assert.assertNotEquals(selectorDimFilter3.hashCode(), selectorDimFilter4.hashCode());
   }
 
   @Test
   public void testSimpleOptimize()
   {
-    SelectorDimFilter selectorDimFilter = new SelectorDimFilter("abc", "d", null);
+    SelectorDimFilter selectorDimFilter = new SelectorDimFilter("abc", "d", null, null);
     DimFilter filter = new AndDimFilter(
         Arrays.<DimFilter>asList(
             new OrDimFilter(

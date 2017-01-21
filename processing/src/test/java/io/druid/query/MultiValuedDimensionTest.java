@@ -212,7 +212,7 @@ public class MultiValuedDimensionTest
             )
         )
         .setDimFilter(
-            new SelectorDimFilter("tags", "t3", null)
+            new SelectorDimFilter("tags", "t3", null, null)
         )
         .build();
 
@@ -260,7 +260,7 @@ public class MultiValuedDimensionTest
             )
         )
         .setDimFilter(
-            new SelectorDimFilter("tags", "t3", null)
+            new SelectorDimFilter("tags", "t3", null, null)
         )
         .build();
 
@@ -300,7 +300,7 @@ public class MultiValuedDimensionTest
                     }
             ))
         .threshold(5)
-        .filters(new SelectorDimFilter("tags", "t3", null)).build();
+        .filters(new SelectorDimFilter("tags", "t3", null, null)).build();
 
     QueryRunnerFactory factory = new TopNQueryRunnerFactory(
         TestQueryRunners.getPool(),

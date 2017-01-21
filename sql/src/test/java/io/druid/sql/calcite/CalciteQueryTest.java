@@ -3115,7 +3115,7 @@ public class CalciteQueryTest
                         .setGranularity(QueryGranularities.ALL)
                         .setDimFilter(OR(
                             new LikeDimFilter("dim1", "דר%", null, null),
-                            new SelectorDimFilter("dim1", "друид", null)
+                            new SelectorDimFilter("dim1", "друид", null, null)
                         ))
                         .setDimensions(DIMS(
                             new DefaultDimensionSpec("dim1", "d0"),
@@ -3238,7 +3238,7 @@ public class CalciteQueryTest
 
   private static SelectorDimFilter SELECTOR(final String fieldName, final String value, final ExtractionFn extractionFn)
   {
-    return new SelectorDimFilter(fieldName, value, extractionFn);
+    return new SelectorDimFilter(fieldName, value, extractionFn, null);
   }
 
   private static DimFilter NUMERIC_SELECTOR(

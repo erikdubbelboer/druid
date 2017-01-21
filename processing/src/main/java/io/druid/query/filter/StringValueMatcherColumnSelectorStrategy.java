@@ -22,6 +22,7 @@ package io.druid.query.filter;
 import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import io.druid.segment.DimensionSelector;
+import io.druid.segment.data.IndexedInts;
 import io.druid.segment.filter.BooleanValueMatcher;
 
 public class StringValueMatcherColumnSelectorStrategy implements ValueMatcherColumnSelectorStrategy<DimensionSelector>
@@ -51,4 +52,37 @@ public class StringValueMatcherColumnSelectorStrategy implements ValueMatcherCol
     }
   }
 
+  @Override
+  public ValueGetter makeValueGetter(final DimensionSelector selector)
+  {
+    if (selector.getValueCardinality() == 0) {
+      return new ValueGetter()
+      {
+        @Override
+        public String[] get()
+        {
+          return new String[]{ null };
+        }
+      };
+    } else {
+      return new ValueGetter()
+      {
+        @Override
+        public String[] get()
+        {
+          final IndexedInts row = selector.getRow();
+          final int size = row.size();
+          if (size == 0) {
+            return new String[]{ null };
+          } else {
+            String[] values = new String[size];
+            for (int i = 0; i < size; ++i) {
+              values[i] = Strings.emptyToNull(selector.lookupName(row.get(i)));
+            }
+            return values;
+          }
+        }
+      };
+    }
+  }
 }

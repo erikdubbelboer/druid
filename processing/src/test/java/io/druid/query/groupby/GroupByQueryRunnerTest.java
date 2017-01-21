@@ -579,7 +579,7 @@ public class GroupByQueryRunnerTest
         .builder()
         .setDataSource(QueryRunnerTestHelper.dataSource)
         .setQuerySegmentSpec(QueryRunnerTestHelper.firstToThird)
-        .setDimFilter(new SelectorDimFilter("placementish", "a", null))
+        .setDimFilter(new SelectorDimFilter("placementish", "a", null, null))
         .setDimensions(
             Lists.<DimensionSpec>newArrayList(
                 new DefaultDimensionSpec("placementish", "alias"),
@@ -3423,10 +3423,10 @@ public class GroupByQueryRunnerTest
                 new OrDimFilter(
                     ImmutableList.of(
                         new BoundDimFilter("rows", "2", null, true, false, null, null, StringComparators.NUMERIC),
-                        new SelectorDimFilter("idx", "217", null)
+                        new SelectorDimFilter("idx", "217", null, null)
                     )
                 ),
-                new SelectorDimFilter("__time", String.valueOf(new DateTime("2011-04-01").getMillis()), null)
+                new SelectorDimFilter("__time", String.valueOf(new DateTime("2011-04-01").getMillis()), null, null)
             )
         )
     );
@@ -3472,7 +3472,7 @@ public class GroupByQueryRunnerTest
         new OrDimFilter(
             ImmutableList.of(
                 new BoundDimFilter("rows", "12", null, true, false, null, extractionFn2, StringComparators.NUMERIC),
-                new SelectorDimFilter("idx", "super-217", extractionFn)
+                new SelectorDimFilter("idx", "super-217", extractionFn, null)
             )
         )
     );
@@ -4132,15 +4132,15 @@ public class GroupByQueryRunnerTest
         .setDimFilter(
             new OrDimFilter(
                 Lists.<DimFilter>newArrayList(
-                    new SelectorDimFilter("quality", "automotive", null),
-                    new SelectorDimFilter("quality", "premium", null),
-                    new SelectorDimFilter("quality", "mezzanine", null),
-                    new SelectorDimFilter("quality", "business", null),
-                    new SelectorDimFilter("quality", "entertainment", null),
-                    new SelectorDimFilter("quality", "health", null),
-                    new SelectorDimFilter("quality", "news", null),
-                    new SelectorDimFilter("quality", "technology", null),
-                    new SelectorDimFilter("quality", "travel", null)
+                    new SelectorDimFilter("quality", "automotive", null, null),
+                    new SelectorDimFilter("quality", "premium", null, null),
+                    new SelectorDimFilter("quality", "mezzanine", null, null),
+                    new SelectorDimFilter("quality", "business", null, null),
+                    new SelectorDimFilter("quality", "entertainment", null, null),
+                    new SelectorDimFilter("quality", "health", null, null),
+                    new SelectorDimFilter("quality", "news", null, null),
+                    new SelectorDimFilter("quality", "technology", null, null),
+                    new SelectorDimFilter("quality", "travel", null, null)
                 )
             )
         )
@@ -4221,8 +4221,8 @@ public class GroupByQueryRunnerTest
         .setDimFilter(
             new OrDimFilter(
                 Arrays.<DimFilter>asList(
-                    new SelectorDimFilter("market", "spot", null),
-                    new SelectorDimFilter("market", "upfront", null)
+                    new SelectorDimFilter("market", "spot", null, null),
+                    new SelectorDimFilter("market", "upfront", null, null)
                 )
             )
         )
@@ -5040,7 +5040,7 @@ public class GroupByQueryRunnerTest
         .setGranularity(QueryRunnerTestHelper.dayGran)
         .build();
 
-    final DimFilter filter = new SelectorDimFilter("market", "spot", null);
+    final DimFilter filter = new SelectorDimFilter("market", "spot", null, null);
     final GroupByQuery query = GroupByQuery
         .builder()
         .setDataSource(subquery)
@@ -5079,7 +5079,7 @@ public class GroupByQueryRunnerTest
         .setGranularity(QueryRunnerTestHelper.dayGran)
         .build();
 
-    final DimFilter fridayFilter = new SelectorDimFilter(Column.TIME_COLUMN_NAME, "Friday", new TimeFormatExtractionFn("EEEE", null, null, null, false));
+    final DimFilter fridayFilter = new SelectorDimFilter(Column.TIME_COLUMN_NAME, "Friday", new TimeFormatExtractionFn("EEEE", null, null, null, false), null);
     final DimFilter firstDaysFilter = new InDimFilter(Column.TIME_COLUMN_NAME, ImmutableList.of("1", "2", "3"),  new TimeFormatExtractionFn("d", null, null, null, false));
     final GroupByQuery query = GroupByQuery
         .builder()
@@ -5659,8 +5659,8 @@ public class GroupByQueryRunnerTest
         .setDimFilter(
             new OrDimFilter(
                 Arrays.<DimFilter>asList(
-                    new SelectorDimFilter("market", "spot", null),
-                    new SelectorDimFilter("market", "upfront", null)
+                    new SelectorDimFilter("market", "spot", null, null),
+                    new SelectorDimFilter("market", "upfront", null, null)
                 )
             )
         )
@@ -5920,8 +5920,8 @@ public class GroupByQueryRunnerTest
         .setDimFilter(
             new OrDimFilter(
                 Arrays.<DimFilter>asList(
-                    new SelectorDimFilter("market", "spot", null),
-                    new SelectorDimFilter("market", "upfront", null)
+                    new SelectorDimFilter("market", "spot", null, null),
+                    new SelectorDimFilter("market", "upfront", null, null)
                 )
             )
         )
@@ -6152,7 +6152,7 @@ public class GroupByQueryRunnerTest
             )
         )
         .setGranularity(new PeriodGranularity(new Period("P1M"), null, null))
-        .setDimFilter(new SelectorDimFilter("quality", "mezzanine", null))
+        .setDimFilter(new SelectorDimFilter("quality", "mezzanine", null, null))
         .setContext(ImmutableMap.<String, Object>of("bySegment", true));
     final GroupByQuery fullQuery = builder.build();
     QueryToolChest toolChest = factory.getToolchest();
@@ -6227,7 +6227,7 @@ public class GroupByQueryRunnerTest
             )
         )
         .setGranularity(new PeriodGranularity(new Period("P1M"), null, null))
-        .setDimFilter(new SelectorDimFilter("quality", "mezzanine", null))
+        .setDimFilter(new SelectorDimFilter("quality", "mezzanine", null, null))
         .setContext(ImmutableMap.<String, Object>of("bySegment", true));
     final GroupByQuery fullQuery = builder.build();
     QueryToolChest toolChest = factory.getToolchest();
@@ -6301,7 +6301,7 @@ public class GroupByQueryRunnerTest
             )
         )
         .setGranularity(new PeriodGranularity(new Period("P1M"), null, null))
-        .setDimFilter(new SelectorDimFilter("quality", "mezzanine", null))
+        .setDimFilter(new SelectorDimFilter("quality", "mezzanine", null, null))
         .setContext(ImmutableMap.<String, Object>of("bySegment", true));
     final GroupByQuery fullQuery = builder.build();
     QueryToolChest toolChest = factory.getToolchest();
@@ -6338,11 +6338,11 @@ public class GroupByQueryRunnerTest
 
     List<DimFilter> dimFilters = Lists.<DimFilter>newArrayList(
         new ExtractionDimFilter("quality", "automotiveAndBusinessAndNewsAndMezzanine", lookupExtractionFn, null),
-        new SelectorDimFilter("quality", "entertainment", null),
-        new SelectorDimFilter("quality", "health", null),
-        new SelectorDimFilter("quality", "premium", null),
-        new SelectorDimFilter("quality", "technology", null),
-        new SelectorDimFilter("quality", "travel", null)
+        new SelectorDimFilter("quality", "entertainment", null, null),
+        new SelectorDimFilter("quality", "health", null, null),
+        new SelectorDimFilter("quality", "premium", null, null),
+        new SelectorDimFilter("quality", "technology", null, null),
+        new SelectorDimFilter("quality", "travel", null, null)
     );
 
     GroupByQuery query = GroupByQuery.builder().setDataSource(QueryRunnerTestHelper.dataSource)
@@ -6694,7 +6694,7 @@ public class GroupByQueryRunnerTest
     ExtractionFn extractionFn = new JavaScriptExtractionFn(extractionJsFn, false, JavaScriptConfig.getDefault());
 
     List<DimFilter> superFilterList = new ArrayList<>();
-    superFilterList.add(new SelectorDimFilter("quality", "super-mezzanine", extractionFn));
+    superFilterList.add(new SelectorDimFilter("quality", "super-mezzanine", extractionFn, null));
     superFilterList.add(new InDimFilter(
         "quality",
         Arrays.asList("not-super-mezzanine", "FOOBAR", "super-mezzanine"),
@@ -6764,7 +6764,7 @@ public class GroupByQueryRunnerTest
     String jsFn = "function(x) { return(x === 'EMPTY') }";
 
     List<DimFilter> superFilterList = new ArrayList<>();
-    superFilterList.add(new SelectorDimFilter("null_column", "EMPTY", extractionFn));
+    superFilterList.add(new SelectorDimFilter("null_column", "EMPTY", extractionFn, null));
     superFilterList.add(new InDimFilter("null_column", Arrays.asList("NOT-EMPTY", "FOOBAR", "EMPTY"), extractionFn));
     superFilterList.add(new BoundDimFilter("null_column", "EMPTY", "EMPTY", false, false, true, extractionFn,
                                            StringComparators.ALPHANUMERIC
@@ -6893,7 +6893,7 @@ public class GroupByQueryRunnerTest
         .setDataSource(QueryRunnerTestHelper.dataSource)
         .setQuerySegmentSpec(QueryRunnerTestHelper.firstToThird)
         .setDimensions(Lists.<DimensionSpec>newArrayList(new DefaultDimensionSpec("qualityLong", "ql_alias", ValueType.LONG)))
-        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null))
+        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,
@@ -7018,7 +7018,7 @@ public class GroupByQueryRunnerTest
         .setDataSource(QueryRunnerTestHelper.dataSource)
         .setQuerySegmentSpec(QueryRunnerTestHelper.firstToThird)
         .setDimensions(Lists.<DimensionSpec>newArrayList(new ExtractionDimensionSpec("qualityLong", "ql_alias", jsExtractionFn)))
-        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null))
+        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,
@@ -7065,7 +7065,7 @@ public class GroupByQueryRunnerTest
         .setDataSource(QueryRunnerTestHelper.dataSource)
         .setQuerySegmentSpec(QueryRunnerTestHelper.firstToThird)
         .setDimensions(Lists.<DimensionSpec>newArrayList(new DefaultDimensionSpec("__time", "time_alias", ValueType.LONG)))
-        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null))
+        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,
@@ -7110,7 +7110,7 @@ public class GroupByQueryRunnerTest
         .setDataSource(QueryRunnerTestHelper.dataSource)
         .setQuerySegmentSpec(QueryRunnerTestHelper.firstToThird)
         .setDimensions(Lists.<DimensionSpec>newArrayList(new ExtractionDimensionSpec("__time", "time_alias", jsExtractionFn)))
-        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null))
+        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,
@@ -7157,7 +7157,7 @@ public class GroupByQueryRunnerTest
         .setDataSource(QueryRunnerTestHelper.dataSource)
         .setQuerySegmentSpec(QueryRunnerTestHelper.firstToThird)
         .setDimensions(Lists.<DimensionSpec>newArrayList(new DefaultDimensionSpec("index", "index_alias", ValueType.FLOAT)))
-        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null))
+        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,
@@ -7283,7 +7283,7 @@ public class GroupByQueryRunnerTest
         .setDataSource(QueryRunnerTestHelper.dataSource)
         .setQuerySegmentSpec(QueryRunnerTestHelper.firstToThird)
         .setDimensions(Lists.<DimensionSpec>newArrayList(new ExtractionDimensionSpec("index", "index_alias", jsExtractionFn)))
-        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null))
+        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,
@@ -7349,8 +7349,8 @@ public class GroupByQueryRunnerTest
             new DimFilterHavingSpec(
                 new AndDimFilter(
                     Lists.<DimFilter>newArrayList(
-                        new SelectorDimFilter("ql_alias", "1400", null),
-                        new SelectorDimFilter("time_alias", "1301616000000", null),
+                        new SelectorDimFilter("ql_alias", "1400", null, null),
+                        new SelectorDimFilter("time_alias", "1301616000000", null, null),
                         new BoundDimFilter(
                             "index_alias",
                             "1310.0",
@@ -7401,7 +7401,7 @@ public class GroupByQueryRunnerTest
                 new DefaultDimensionSpec("qualityFloat", "qf_alias")
             )
         )
-        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null))
+        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,
@@ -7458,7 +7458,7 @@ public class GroupByQueryRunnerTest
                 new DefaultDimensionSpec(Column.TIME_COLUMN_NAME, "time_alias")
             )
         )
-        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null))
+        .setDimFilter(new SelectorDimFilter("quality", "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,
@@ -7675,7 +7675,7 @@ public class GroupByQueryRunnerTest
         .setDimFilter(
             new AndDimFilter(
                 Lists.<DimFilter>newArrayList(
-                    new SelectorDimFilter("ql_alias", "1200", null),
+                    new SelectorDimFilter("ql_alias", "1200", null, null),
                     new BoundDimFilter(
                         "qf_alias",
                         "11095.0",
@@ -7827,7 +7827,7 @@ public class GroupByQueryRunnerTest
             ValueType.LONG,
             strlenFn
         )))
-        .setDimFilter(new SelectorDimFilter(QueryRunnerTestHelper.qualityDimension, "entertainment", null))
+        .setDimFilter(new SelectorDimFilter(QueryRunnerTestHelper.qualityDimension, "entertainment", null, null))
         .setAggregatorSpecs(
             Arrays.asList(
                 QueryRunnerTestHelper.rowsCount,

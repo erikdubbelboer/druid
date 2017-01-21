@@ -130,12 +130,12 @@ public class LongFilteringTest extends BaseFilterTest
   public void testLongColumnFiltering()
   {
     assertFilterMatches(
-        new SelectorDimFilter(LONG_COLUMN, "0", null),
+        new SelectorDimFilter(LONG_COLUMN, "0", null, null),
         ImmutableList.<String>of()
     );
 
     assertFilterMatches(
-        new SelectorDimFilter(LONG_COLUMN, "3", null),
+        new SelectorDimFilter(LONG_COLUMN, "3", null, null),
         ImmutableList.<String>of("3")
     );
 
@@ -185,17 +185,17 @@ public class LongFilteringTest extends BaseFilterTest
   public void testLongColumnFilteringWithNonNumbers()
   {
     assertFilterMatches(
-        new SelectorDimFilter(LONG_COLUMN, "", null),
+        new SelectorDimFilter(LONG_COLUMN, "", null, null),
         ImmutableList.<String>of()
     );
 
     assertFilterMatches(
-        new SelectorDimFilter(LONG_COLUMN, null, null),
+        new SelectorDimFilter(LONG_COLUMN, null, null, null),
         ImmutableList.<String>of()
     );
 
     assertFilterMatches(
-        new SelectorDimFilter(LONG_COLUMN, "abc", null),
+        new SelectorDimFilter(LONG_COLUMN, "abc", null, null),
         ImmutableList.<String>of()
     );
 
@@ -239,11 +239,11 @@ public class LongFilteringTest extends BaseFilterTest
     LookupExtractionFn exfn = new LookupExtractionFn(mapExtractor, false, "UNKNOWN", false, true);
 
     assertFilterMatches(
-        new SelectorDimFilter(LONG_COLUMN, "Monday", exfn),
+        new SelectorDimFilter(LONG_COLUMN, "Monday", exfn, null),
         ImmutableList.<String>of("1")
     );
     assertFilterMatches(
-        new SelectorDimFilter(LONG_COLUMN, "Notaday", exfn),
+        new SelectorDimFilter(LONG_COLUMN, "Notaday", exfn, null),
         ImmutableList.<String>of()
     );
 
@@ -293,7 +293,7 @@ public class LongFilteringTest extends BaseFilterTest
   public void testMultithreaded()
   {
     assertFilterMatchesMultithreaded(
-        new SelectorDimFilter(LONG_COLUMN, "3", null),
+        new SelectorDimFilter(LONG_COLUMN, "3", null, null),
         ImmutableList.<String>of("3")
     );
 

@@ -1601,7 +1601,7 @@ public class CachingClusteredClientTest
                                  Arrays.asList(
                                      Druids.newOrDimFilterBuilder().fields(
                                          Arrays.asList(
-                                             new SelectorDimFilter("dim0", "1", null),
+                                             new SelectorDimFilter("dim0", "1", null, null),
                                              new BoundDimFilter("dim0", "222", "333", false, false, false, null,
                                                                 StringComparators.LEXICOGRAPHIC
                                              )
@@ -1679,7 +1679,7 @@ public class CachingClusteredClientTest
                                  Arrays.asList(
                                      Druids.newOrDimFilterBuilder().fields(
                                          Arrays.asList(
-                                             new SelectorDimFilter("dim1", "a", null),
+                                             new SelectorDimFilter("dim1", "a", null, null),
                                              new BoundDimFilter("dim1", "from", "to", false, false, false, null,
                                                                 StringComparators.LEXICOGRAPHIC
                                              )
